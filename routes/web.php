@@ -12,3 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::get('/emails', 'EmailsController@index');
+
+Route::get('/emails/create', 'EmailsController@create');
