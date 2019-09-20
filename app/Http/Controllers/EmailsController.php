@@ -19,7 +19,7 @@ class EmailsController extends Controller
      */
     public function index()
     {
-        $emails = auth()->user()->projects;
+        $emails = auth()->user()->emails;
         return view('emails.index', compact('emails'));
     }
 
@@ -42,7 +42,7 @@ class EmailsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'subject' => ['required', 'min:5', 'max:255'],
+            'subject' => ['required', 'min:3', 'max:255'],
             'body' => ['required']
         ]);
         $validated['owner_id'] = auth()->id();

@@ -38,7 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function projects()
+    public function emails()
     {
         return $this->hasMany(Email::class, 'owner_id');
     }

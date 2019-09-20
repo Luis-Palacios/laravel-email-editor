@@ -1,26 +1,39 @@
-{{-- @extends('layout') --}}
+@extends('layouts.app')
 
-{{-- @section('content') --}}
-<div class="title m-b-md">
-    Create a new email
-</div>
-<div>
-    <form method="POST" action="/emails">
-        {{ csrf_field() }}
-        <input type="text" name="subject" placeholder="Subject" value="{{ old('subject') }}">
-        <textarea name="body" id="body" placeholder="Body">{{ old('body') }}</textarea>
-        <button type="submit">Save</button>
-    </form>
-    @if ($errors->any())
-    {{-- $errors->has('body') --}}
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('content')
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Add a new email
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/emails">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Subject</label>
+                    <input type="text" class="form-control {{ $errors->has('subject') ? 'is-invalid': '' }}"
+                        name="subject" placeholder="Subject" value="{{ old('subject') }}" autofocus>
+                    @error('subject')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Body</label>
+                    <textarea name="body" class="form-control {{ $errors->has('body') ? 'is-invalid': '' }}"
+                        placeholder="Body">{{ old('body') }}</textarea>
+                    @error('body')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <a href="/emails" class="btn btn-secondary">Back to Emails</a>
+                <button class="btn btn-primary type=" submit">Save</button>
+            </form>
+        </div>
     </div>
-    @endif
 </div>
 
-{{-- @endsection --}}
+@endsection

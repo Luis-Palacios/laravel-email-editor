@@ -17,3 +17,10 @@ An Email Editor powered by Laravel and react
 4. Create your own `.env` file on the root of the project, you can use `.env.example` as a template then define your APP_KEY and DB Connection settings. **Note:** If you are using version 8 or higher from mysql you must use a login `WITH mysql_native_password` or Authentication Type: Standard otherwise you will run into an error like the following: `The server requested authentication method unknown to the client` more info here: [Laravel and mysql v8](https://ma.ttias.be/mysql-8-laravel-the-server-requested-authentication-method-unknown-to-the-client/)
 5. Generate your app key executing `php artisan key:generate` from the command line
 6. Run migrations executing `php artisan migrate` from the command line
+7. Run database seeding executing `php artisan db:seed`
+
+## Running the project
+
+1. Execute `npm run dev`
+2. Execute `php artisan serve`
+3. If you executed the seeding you should have an existing use `user@example.com` with the password: `password`
