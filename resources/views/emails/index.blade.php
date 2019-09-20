@@ -1,6 +1,6 @@
-@extends('layout')
+{{-- @extends('layout') --}}
 
-@section('content')
+{{-- @section('content') --}}
 <div class="title m-b-md">
     Emails
 </div>
@@ -9,4 +9,4 @@
     <li>{{ $email->subject }}</li>
     @endforeach
 </div>
-@endsection
+{{-- @endsection --}}

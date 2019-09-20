@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', function() {
+    return view('welcome');
+});
 
-Route::resource('emails', 'EmailsController');
+Route::resource('emails', 'EmailsController');//->middleware('can:update,email');
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

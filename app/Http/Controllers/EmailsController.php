@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class EmailsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class EmailsController extends Controller
      */
     public function index()
     {
-        $emails = Email::all();
+        $emails = auth()->user()->projects;
         return view('emails.index', compact('emails'));
     }
 
@@ -40,6 +45,7 @@ class EmailsController extends Controller
             'subject' => ['required', 'min:5', 'max:255'],
             'body' => ['required']
         ]);
+        $validated['owner_id'] = auth()->id();
         Email::create($validated);
 
         return redirect('/emails');
@@ -53,6 +59,7 @@ class EmailsController extends Controller
      */
     public function show(Email $email)
     {
+        $this->authorize('update', $email);
         return view('emails.show', compact('email'));
     }
 
@@ -64,6 +71,7 @@ class EmailsController extends Controller
      */
     public function edit(Email $email)
     {
+        $this->authorize('update', $email);
         return view('emails.edit', compact('email'));
     }
 
@@ -76,6 +84,7 @@ class EmailsController extends Controller
      */
     public function update(Request $request, Email $email)
     {
+        $this->authorize('update', $email);
         $email->update($request->only('subject', 'body'));
         return redirect('/emails');
     }

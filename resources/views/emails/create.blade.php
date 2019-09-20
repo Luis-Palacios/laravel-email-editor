@@ -1,6 +1,6 @@
-@extends('layout')
+{{-- @extends('layout') --}}
 
-@section('content')
+{{-- @section('content') --}}
 <div class="title m-b-md">
     Create a new email
 </div>
@@ -23,4 +23,4 @@
     @endif
 </div>
 
-@endsection
+{{-- @endsection --}}
