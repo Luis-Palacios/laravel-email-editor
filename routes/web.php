@@ -13,6 +13,5 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/emails', 'EmailsController@index');
+Route::resource('emails', 'EmailsController');
 
-Route::get('/emails/create', 'EmailsController@create');
