@@ -36,7 +36,12 @@ class EmailsController extends Controller
      */
     public function store(Request $request)
     {
-        Email::create($request->only(['subject', 'body']));
+        $validated = $request->validate([
+            'subject' => ['required', 'min:5', 'max:255'],
+            'body' => ['required']
+        ]);
+        Email::create($validated);
+
         return redirect('/emails');
     }
 
