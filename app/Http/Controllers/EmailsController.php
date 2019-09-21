@@ -19,7 +19,7 @@ class EmailsController extends Controller
      */
     public function index()
     {
-        $emails = auth()->user()->emails;
+        $emails = auth()->user()->emails()->paginate(10);
         return view('emails.index', compact('emails'));
     }
 
