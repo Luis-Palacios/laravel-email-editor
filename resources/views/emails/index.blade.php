@@ -1,13 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Emails</li>
+        </ol>
+    </nav>
     <div class="card">
         <div class="card-header">
             My emails
         </div>
         <div class="card-body">
-            <table class="table table-hover">
+            <table class="table table-hover table-bordered">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
