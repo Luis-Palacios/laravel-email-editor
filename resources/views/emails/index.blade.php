@@ -25,9 +25,14 @@
                 <tbody>
                     @foreach ($emails as $email)
                     <tr>
-                        <th scope="row">{{ $email->id }}</th>
+                        <th scope="row">
+                            <a href="/emails/{{ $email->id }}" class="btn btn-dark">
+                                Edit
+                            </a>
+
+                        </th>
                         <td>{{ $email->subject }}</td>
-                        <td>{{ $email->body }}</td>
+                        <td>{{ $email->body['blocks'][0]['text'] }}</td>
                     </tr>
                     @endforeach
                 </tbody>

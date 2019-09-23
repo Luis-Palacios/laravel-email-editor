@@ -19,7 +19,7 @@ class EmailsController extends Controller
      */
     public function index()
     {
-        $emails = auth()->user()->emails()->paginate(10);
+        $emails = auth()->user()->emails()->orderBy('id', 'DESC')->paginate(10);
         return view('emails.index', compact('emails'));
     }
 
@@ -30,7 +30,9 @@ class EmailsController extends Controller
      */
     public function create()
     {
-        return view('emails.create');
+        $email = new Email;
+        $email->body = null;
+        return view('emails.create', compact('email'));
     }
 
     /**
@@ -41,12 +43,24 @@ class EmailsController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'subject' => ['required', 'min:3', 'max:255'],
             'body' => ['required']
         ]);
-        $validated['owner_id'] = auth()->id();
-        Email::create($validated);
+
+        # Make sure the value will be saves as json not string
+        $validated['body'] = json_decode($request->body);
+
+        $emailId = $request->id;
+        if ($emailId) {
+            $email = Email::find($emailId);
+            $this->authorize('update', $email);
+            $email->update($validated);
+        } else {
+            $validated['owner_id'] = auth()->id();
+            Email::create($validated);
+        }
 
         return redirect('/emails');
     }
@@ -60,44 +74,6 @@ class EmailsController extends Controller
     public function show(Email $email)
     {
         $this->authorize('update', $email);
-        return view('emails.show', compact('email'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Email  $email
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Email $email)
-    {
-        $this->authorize('update', $email);
-        return view('emails.edit', compact('email'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Email  $email
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Email $email)
-    {
-        $this->authorize('update', $email);
-        $email->update($request->only('subject', 'body'));
-        return redirect('/emails');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Email  $email
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Email $email)
-    {
-        $email->delete();
-        return redirect('/emails');
+        return view('emails.create', compact('email'));
     }
 }

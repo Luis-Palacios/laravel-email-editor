@@ -8,6 +8,25 @@ use Faker\Generator as Faker;
 $factory->define(Email::class, function (Faker $faker) {
     return [
         'subject' => $faker->text(30),
-        'body' => $faker->text
+        'body' => array(
+            'blocks' =>
+            array(
+                0 =>
+                array(
+                    'key' => 'btmi0',
+                    'text' => $faker->text(),
+                    'type' => 'unstyled',
+                    'depth' => 0,
+                    'inlineStyleRanges' =>
+                    array(),
+                    'entityRanges' =>
+                    array(),
+                    'data' =>
+                    (object)array(),
+                ),
+            ),
+            'entityMap' =>
+            (object)array(),
+        )
     ];
 });

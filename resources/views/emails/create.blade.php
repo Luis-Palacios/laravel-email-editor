@@ -4,7 +4,7 @@
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/emails">Emails</a></li>
             <li class="breadcrumb-item active" aria-current="page">Create</li>
         </ol>
@@ -16,10 +16,12 @@
         <div class="card-body">
             <form method="POST" action="/emails">
                 {{ csrf_field() }}
+                <input type="hidden" name="id" value="{{$email->id}}">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Subject</label>
+                    <label for="subject">Subject</label>
                     <input type="text" class="form-control {{ $errors->has('subject') ? 'is-invalid': '' }}"
-                        name="subject" placeholder="Subject" value="{{ old('subject') }}" autofocus>
+                        name="subject" id="subject" placeholder="Subject..."
+                        value="{{ old('subject') ? old('subject') : $email->subject }}" autofocus>
                     @error('subject')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -28,8 +30,9 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Body</label>
-                    <textarea name="body" class="form-control {{ $errors->has('body') ? 'is-invalid': '' }}"
-                        placeholder="Body">{{ old('body') }}</textarea>
+                    <div id="email-body-container" class="{{ $errors->has('body') ? 'invalid-state-container': '' }}">
+                    </div>
+                    <input type="hidden" class="form-control {{ $errors->has('body') ? 'is-invalid': '' }}">
                     @error('body')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -42,5 +45,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    window.__laravel__ = {
+        emailBody : {!! old('body', $email->body) ? old('body', json_encode($email->body)): json_encode(null)  !!}
+    };
+</script>
 @endsection
