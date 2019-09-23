@@ -23,18 +23,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($emails as $email)
+                    @forelse ($emails as $email)
                     <tr>
-                        <th scope="row">
+                        <td scope="row">
                             <a href="/emails/{{ $email->id }}" class="btn btn-dark">
                                 Edit
                             </a>
 
-                        </th>
+                        </td>
                         <td>{{ $email->subject }}</td>
                         <td>{{ $email->body['blocks'][0]['text'] }}</td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            You don't have any emails yet, begin your awesome adventure here <a href="/emails/create">Create your first email!</a>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
 
